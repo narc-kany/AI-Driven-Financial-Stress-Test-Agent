@@ -1,4 +1,56 @@
-AI-Driven Financial Stress Test AgentProject OverviewThe AI-Driven Financial Stress Test Agent is a sophisticated, full-stack application designed to automate and enhance financial risk analysis. It uses a Small Language Model (SLM) agent to translate complex, narrative-based stress test requests (e.g., "What if a recession hits?") into structured, quantifiable macroeconomic shocks. These shocks are then fed into a high-performance FastAPI backend, which runs a dynamic risk model (simulated XGBoost/Monte Carlo) to calculate key financial metrics like Expected Loss (EL) and Value at Risk (VaR).The application is split into two distinct services:ML Engine API (FastAPI): The calculation backend.SLM Client App (Streamlit): The conversational frontend and visualization layer.🚀 Key FeaturesSLM-Powered Scenario Generation: Converts natural language prompts into structured JSON scenarios (Pydantic models) with specific macroeconomic factor shocks.Decoupled Architecture: Utilizes a high-performance FastAPI server for complex, data-intensive ML calculations, keeping the Streamlit UI responsive.Dynamic Risk Modeling: Simulates an advanced risk engine (mocked XGBoost with PnL simulation) to calculate stressed metrics.Real-Time Visualization: Displays critical outputs, including a simulated Profit & Loss (PnL) path over time, and ML Model Explainability (Feature Impact).🛠️ ArchitectureThe system follows a microservice-like architecture:ComponentTechnologyRoleSLM Client AppStreamlit, Plotly, RequestsUser interface, conversation management, API health check, and data visualization.ML Engine APIFastAPI, Uvicorn, PydanticDefines the API contract, validates input (scenarios), executes the risk calculation logic, and returns structured results.Risk Model CorePython, Numpy, PandasMocked financial model (e.g., XGBoost) that runs the stress test logic and dynamic PnL simulation.📁 Project Structureai_stress_test_agent/
+AI-Driven Financial Stress Test Agent
+
+Project Overview
+
+The AI-Driven Financial Stress Test Agent is a sophisticated, full-stack application designed to automate and enhance financial risk analysis. It uses a Small Language Model (SLM) agent to translate complex, narrative-based stress test requests (e.g., "What if a recession hits?") into structured, quantifiable macroeconomic shocks. These shocks are then fed into a high-performance FastAPI backend, which runs a dynamic risk model (simulated XGBoost/Monte Carlo) to calculate key financial metrics like Expected Loss (EL) and Value at Risk (VaR).
+
+The application is split into two distinct services:
+
+ML Engine API (FastAPI): The calculation backend.
+
+SLM Client App (Streamlit): The conversational frontend and visualization layer.
+
+🚀 Key Features
+
+SLM-Powered Scenario Generation: Converts natural language prompts into structured JSON scenarios (Pydantic models) with specific macroeconomic factor shocks.
+
+Decoupled Architecture: Utilizes a high-performance FastAPI server for complex, data-intensive ML calculations, keeping the Streamlit UI responsive.
+
+Dynamic Risk Modeling: Simulates an advanced risk engine (mocked XGBoost with PnL simulation) to calculate stressed metrics.
+
+Real-Time Visualization: Displays critical outputs, including a simulated Profit & Loss (PnL) path over time, and ML Model Explainability (Feature Impact).
+
+🛠️ Architecture
+
+The system follows a microservice-like architecture:
+
+Component
+
+Technology
+
+Role
+
+SLM Client App
+
+Streamlit, Plotly, Requests
+
+User interface, conversation management, API health check, and data visualization.
+
+ML Engine API
+
+FastAPI, Uvicorn, Pydantic
+
+Defines the API contract, validates input (scenarios), executes the risk calculation logic, and returns structured results.
+
+Risk Model Core
+
+Python, Numpy, Pandas
+
+Mocked financial model (e.g., XGBoost) that runs the stress test logic and dynamic PnL simulation.
+
+📁 Project Structure
+
+ai_stress_test_agent/
 ├── ml_engine_api/
 │   ├── ml_engine.py                # XGBoost/Dynamic Model Core (Mocked)
 │   ├── risk_api_models.py          # Pydantic Schemas for Request/Response
@@ -8,15 +60,75 @@ AI-Driven Financial Stress Test AgentProject OverviewThe AI-Driven Financial Str
 │   └── hf_agent_client.py          # SLM Agent Logic & API Connector
 ├── .env                            # Environment variables (API URL)
 └── requirements.txt                # Project dependencies
-⚙️ Setup and InstallationPrerequisitesPython 3.10+pipStep 1: Clone the Repository (Mock Command)git clone [https://github.com/narc-kany/AI-Driven-Financial-Stress-Test-Agent.git](https://github.com/narc-kany/AI-Driven-Financial-Stress-Test-Agent.git)
+
+
+⚙️ Setup and Installation
+
+Prerequisites
+
+Python 3.10+
+
+pip
+
+Step 1: Clone the Repository (Mock Command)
+
+git clone [https://github.com/narc-kany/AI-Driven-Financial-Stress-Test-Agent.git](https://github.com/narc-kany/AI-Driven-Financial-Stress-Test-Agent.git)
 cd AI-Driven-Financial-Stress-Test-Agent 
 # Note: You may need to cd to the parent directory of ai_stress_test_agent for running the apps
-Step 2: Create and Activate Virtual Environmentpython -m venv .venv
+
+
+Step 2: Create and Activate Virtual Environment
+
+python -m venv .venv
 # On Windows:
 .venv\Scripts\Activate
-Step 3: Install Dependenciespip install -r requirements.txt
-Step 4: Configure Environment VariablesEnsure your .env file contains the base URL for the FastAPI service:# .env file content
+
+
+Step 3: Install Dependencies
+
+pip install -r requirements.txt
+
+
+Step 4: Configure Environment Variables
+
+Ensure your .env file contains the base URL for the FastAPI service:
+
+# .env file content
 ML_ENGINE_API_URL="[http://127.0.0.1:8000](http://127.0.0.1:8000)"
-▶️ Running the ApplicationYou must run both the API backend and the Streamlit frontend from the root directory that CONTAINS the ai_stress_test_agent package (i.e., the directory above the main project folder).1. Start the ML Engine API (FastAPI Backend)This must be running first. Use python -m uvicorn to ensure correct package import resolution.python -m uvicorn ai_stress_test_agent.ml_engine_api.ml_engine_api:app --reload --host 127.0.0.1 --port 8000
-Wait for the terminal to display: INFO: Application startup complete.2. Start the SLM Agent UI (Streamlit Frontend)Open a separate terminal window, activate the environment, navigate to the same root directory, and run the Streamlit app.python -m streamlit run ai_stress_test_agent/hf_client_app/app.py
-This will open the application in your browser (usually http://localhost:8501).💬 Usage ExampleIn the Streamlit chat box, enter a scenario like:"Simulate a severe global recession scenario where GDP growth contracts by 4.0% for 12 months, and equity market returns decline by 35%. I want to know the resulting Expected Loss."The application will:Display the structured shock parameters generated by the SLM.Send the parameters to the FastAPI backend.Display the calculated Total Net Impact (Loss), the Stressed Expected Loss, and the dynamic PnL path.
+
+
+▶️ Running the Application
+
+You must run both the API backend and the Streamlit frontend from the root directory that CONTAINS the ai_stress_test_agent package (i.e., the directory above the main project folder).
+
+1. Start the ML Engine API (FastAPI Backend)
+
+This must be running first. Use python -m uvicorn to ensure correct package import resolution.
+
+python -m uvicorn ai_stress_test_agent.ml_engine_api.ml_engine_api:app --reload --host 127.0.0.1 --port 8000
+
+
+Wait for the terminal to display: INFO: Application startup complete.
+
+2. Start the SLM Agent UI (Streamlit Frontend)
+
+Open a separate terminal window, activate the environment, navigate to the same root directory, and run the Streamlit app.
+
+python -m streamlit run ai_stress_test_agent/hf_client_app/app.py
+
+
+This will open the application in your browser (usually http://localhost:8501).
+
+💬 Usage Example
+
+In the Streamlit chat box, enter a scenario like:
+
+"Simulate a severe global recession scenario where GDP growth contracts by 4.0% for 12 months, and equity market returns decline by 35%. I want to know the resulting Expected Loss."
+
+The application will:
+
+Display the structured shock parameters generated by the SLM.
+
+Send the parameters to the FastAPI backend.
+
+Display the calculated Total Net Impact (Loss), the Stressed Expected Loss, and the dynamic PnL path.
