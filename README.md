@@ -32,7 +32,7 @@ Converts natural language inputs into validated, structured **Pydantic scenario 
 
 Handles intensive risk computations:
 
-* Mocked XGBoost-style model
+* Mocked XGBoost style model
 * Monte-Carlo PnL simulation
 * Stressed EL & VaR calculations
 
